@@ -19,7 +19,9 @@ void main() async {
       create: (context) => context.read<AuthService>().authStateChanges,
       initialData: null,
     )
-  ], child: MaterialApp(home: Wrapper())));
+  ], child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Wrapper())));
 }
 
 class Wrapper extends StatefulWidget {
@@ -40,14 +42,15 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
+    bool darkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
     final user = context.watch<User?>();
     if (user != null) {
-      return HomePage();
+      return HomePage(darkMode);
     } else {
       if (showSignIn) {
-        return LogInPage(toggleView: toggleView);
+        return LogInPage(toggleView: toggleView, darkMode: darkMode,);
       } else {
-        return SignUpPage(toggleView: toggleView);
+        return SignUpPage(toggleView: toggleView,darkMode: darkMode);
       }
     }
   }

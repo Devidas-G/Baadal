@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "230008401855",
+    "project_id": "baadal-38fb5",
+    "storage_bucket": "baadal-38fb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230008401855:android:ae41426148c08bcdca7b0a",
+        "android_client_info": {
+          "package_name": "com.example.baadal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230008401855-4rbm6ofv79ik72lro9olhagvkc1kh17j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQkTnai4-v44UTDvshgush5Swa8exi68U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230008401855-4rbm6ofv79ik72lro9olhagvkc1kh17j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
