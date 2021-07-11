@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-
 import 'Pages/HomePage.dart';
 import 'Pages/LogInPage.dart';
 import 'Pages/SignUpPage.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Global variables.dart';
+import '../Widgets.dart';
 class SignUpPage extends StatefulWidget {
   final Function toggleView;
   final bool darkMode;
@@ -16,6 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: widget.darkMode?Colors.black:Colors.white,
       body: SafeArea(
         child: Column(
@@ -30,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Sign Up',style: TextStyle(
-                          color: mycolor,
+                          color: myColor,
                           fontSize: 40
                       ),),
                     ],
@@ -38,57 +40,17 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30,right: 30),
-                    child: TextFormField(
-                      controller: email,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.email,color: mycolor,),
-                        hintText: "Email",
-                        hintStyle: TextStyle(color: Colors.grey[600]),
-                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-                        border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-                      ),
-                    ),
-                  ),
+                  AuthTextField(textEditingController: email, darkMode: widget.darkMode, icon: Icons.email, themeColor: myColor, hint: "Email",obscure: false,),
                   SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30,right: 30),
-                    child: TextFormField(
-                      controller: password,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.lock,color: mycolor,),
-                        hintText: "Password",
-                        hintStyle: TextStyle(color: Colors.grey[600]),
-                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-                        border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-                      ),
-                    ),
-                  ),
+                  AuthTextField(textEditingController: password, darkMode: widget.darkMode, icon: Icons.lock, themeColor: myColor, hint: "Password",obscure: true,),
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 40,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: mycolor,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        onTap: (){},
-                        child: Center(child: Text("Sign Up",style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20
-                        ),)),
-                      ),
-                    ),
-                  ),
+                  AuthButton(color: myColor, text: "Sign Up", onTap: (){
+                    print("${email.text},${password.text}");
+                  })
                 ],
               ),
             ),
@@ -129,3 +91,5 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
+
+
