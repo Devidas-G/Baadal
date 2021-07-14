@@ -1,47 +1,75 @@
+import 'package:baadal/Global%20variables.dart';
 import 'package:flutter/material.dart';
+
 class AuthTextField extends StatelessWidget {
-  const AuthTextField({
+  AuthTextField({
     Key? key,
     required this.textEditingController,
-    required this.darkMode,required this.icon, required this.themeColor, required this.hint, required this.obscure,
+    this.darkMode=false,
+    required this.icon,
+    required this.themeColor,
+    required this.hint,
+    this.obscure=false,
+    this.validator,
+    this.eyeIcon=false,
+    this.onEyePressed,
   }) : super(key: key);
 
   final TextEditingController textEditingController;
-  final bool darkMode;
+  bool darkMode;
   final IconData icon;
   final Color themeColor;
   final String hint;
-  final bool obscure;
+  bool obscure;
+  FormFieldValidator<String>? validator;
+  VoidCallback? onEyePressed;
+  bool eyeIcon;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30,right: 30),
+      padding: const EdgeInsets.only(left: 30, right: 30),
       child: TextFormField(
         controller: textEditingController,
         cursorColor: themeColor,
-        style: TextStyle(color: darkMode?Colors.grey:Colors.black),
+        style: TextStyle(color: darkMode ? Colors.grey : Colors.black),
         obscureText: obscure,
+        validator: validator,
         decoration: InputDecoration(
-          prefixIcon: Icon(icon,color: themeColor,),
+          prefixIcon: Icon(
+            icon,
+            color: themeColor,
+          ),
+          suffixIcon: eyeIcon
+              ? IconButton(
+            splashRadius: 1,
+                  icon: Icon(Icons.remove_red_eye,color: eyeObscure?themeColor:Colors.grey,),
+                  onPressed: onEyePressed,
+                )
+              : null,
           hintText: "$hint",
           hintStyle: TextStyle(color: Colors.grey[600]),
-          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: darkMode?Colors.grey:Colors.black)),
+          focusedBorder: UnderlineInputBorder(
+              borderSide:
+                  BorderSide(color: darkMode ? Colors.grey : Colors.black)),
         ),
       ),
     );
   }
 }
 
-
 class AuthButton extends StatelessWidget {
   const AuthButton({
-    Key? key, required this.color, required this.text, required this.onTap,
+    Key? key,
+    required this.color,
+    required this.text,
+    required this.onTap,
   }) : super(key: key);
 
   final Color color;
   final String text;
   final Function onTap;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,12 +83,34 @@ class AuthButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          onTap:()=>onTap(),
-          child: Center(child: Text("$text",style: TextStyle(
-              color: Colors.white,
-              fontSize: 20
-          ),)),
+          onTap: () => onTap(),
+          child: Center(
+              child: Text(
+            "$text",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          )),
         ),
+      ),
+    );
+  }
+}
+
+class SocialAuthBtn extends StatelessWidget {
+  const SocialAuthBtn({
+    Key? key, required this.imagePath, this.onTap,
+  }) : super(key: key);
+
+  final String imagePath;
+  final GestureTapCallback? onTap;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: CircleAvatar(
+        backgroundColor: Colors.white,
+        child: Image.asset("$imagePath"),
       ),
     );
   }
