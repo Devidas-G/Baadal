@@ -17,6 +17,7 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
+  String error="";
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -55,6 +56,11 @@ class _LogInPageState extends State<LogInPage> {
                           return "Please Enter Email";
                         }
                       },
+                      onChanged: (val){
+                        setState(() {
+                          error="";
+                        });
+                      },
                     ),
                     SizedBox(
                       height: 20,
@@ -79,9 +85,21 @@ class _LogInPageState extends State<LogInPage> {
                           return "Password must be greater than 5";
                         }
                       },
+                      onChanged: (val){
+                        setState(() {
+                          error="";
+                        });
+                      },
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
+                    ),
+                    Text("$error",style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14
+                    )),
+                    SizedBox(
+                      height: 10,
                     ),
                     AuthButton(
                         color: myColor,
@@ -89,7 +107,15 @@ class _LogInPageState extends State<LogInPage> {
                         onTap: () async {
                           if (form.currentState!.validate()) {
                             print("${email.text},${password.text}");
-                            await AuthService(FirebaseAuth.instance).emailLogIn(email.text, password.text);
+                            setState(() {
+                              error="";
+                            });
+                            dynamic result = await AuthService(FirebaseAuth.instance).emailLogIn(email.text, password.text);
+                            if(result!=UserCredential){
+                              setState(() {
+                                error=result;
+                              });
+                            }
                           }
                         }),
                     Padding(

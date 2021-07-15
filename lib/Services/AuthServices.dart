@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../Global variables.dart';
+
 class AuthService{
 AuthService(this.auth);
 FirebaseAuth auth;
@@ -9,25 +11,14 @@ Stream<User?> get authStateChanges => auth.authStateChanges();
 Future emailLogIn(email,password)async{
   try{
     UserCredential userCredential=await auth.signInWithEmailAndPassword(email: email, password: password);
+    user = userCredential.user;
     return userCredential;
   }on FirebaseAuthException catch(e){
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-      return "No user found";
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
-      return "Wrong password";
-    }else if(e.code=='invalid-email'){
-      print("enter a valid email");
-      return "enter a valid email";
-    }else if(e.code=='unknown'){
-      print('please fill all the details');
-      return 'please fill all the details';
+    if(e.code=='unknown'){
+      return 'An unknown error has occurred';
     }else{
       print(e.code);
-      print(e.message);
-      print(e);
-      return e.message;
+      return e.code;
     }
   }catch(e){
     print(e.toString());
@@ -38,19 +29,14 @@ Future emailLogIn(email,password)async{
 Future signup(String email,String password) async {
   try{
     UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: email, password: password);
+    user = userCredential.user;
     return  userCredential;
   }on FirebaseAuthException catch(e){
-    if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
-      return e.message;
-    } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
-      return e.message;
-    }else if(e.code=='unknown'){
-      print('please fill all the details');
-      return 'please fill all the details';
+    if(e.code=='unknown'){
+      return 'An unknown error has occurred';
     }else{
-      return e.message;
+      print(e.code);
+      return e.code;
     }
   }catch (e) {
     print(e);
@@ -72,6 +58,7 @@ Future<UserCredential> signInWithGoogle() async {
 
   // Once signed in, return the UserCredential
   UserCredential userCredential =await FirebaseAuth.instance.signInWithCredential(credential);
+  user = userCredential.user;
   return userCredential;
 }
 

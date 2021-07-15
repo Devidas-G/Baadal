@@ -1,5 +1,10 @@
-import 'package:baadal/Services/AuthServices.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:baadal/Global%20variables.dart';
+import 'package:baadal/Pages/ChatsList.dart';
+import 'package:baadal/Pages/FilesPage.dart';
+import 'package:baadal/Pages/ProfilePage.dart';
+import 'package:baadal/Pages/SearchPage.dart';
+import 'package:baadal/Pages/UploadPage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
   const HomePage(bool darkMode, {Key? key}) : super(key: key);
@@ -9,15 +14,51 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int page=0;
+  void navigationTapped(int page) {
+    //Animating Page
+    pageController.jumpToPage(page);
+  }
+
+  void onPageChanged(int page) {
+    setState(() {
+      this.page = page;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: RaisedButton(
-        child: Text("Log out"),
-        onPressed: ()async{
-          await AuthService(FirebaseAuth.instance).logout();
-        },
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      bottomNavigationBar: CupertinoTabBar(
+        onTap: navigationTapped,
+        currentIndex: page,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home,color: page==0?myColor:Colors.grey[700],),),
+          BottomNavigationBarItem(icon: Icon(Icons.search,color: page==1?myColor:Colors.grey[700],)),
+          BottomNavigationBarItem(icon: Icon(Icons.chat,color: page==2?myColor:Colors.grey[700],)),
+          BottomNavigationBarItem(icon: Icon(Icons.upload_file,color: page==3?myColor:Colors.grey[700],)),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle_rounded,color: page==4?myColor:Colors.grey[700],)),
+      ],),
+      body: PageView(
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        children: [
+          Container(
+            child: FilesPage(),
+          ),
+          Container(
+            child: SearchPage(),
+          ),
+          Container(
+            child: ChatsList(),
+          ),
+          Container(
+            child: UploadPage(),
+          ),
+          Container(
+            child: ProfilePage(),
+          ),
+        ],
       ),
     );
   }

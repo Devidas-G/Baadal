@@ -17,6 +17,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  String error="";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +55,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           return "Please Enter Email";
                         }
                       },
+                      onChanged: (val){
+                        setState(() {
+                          error="";
+                        });
+                      },
                     ),
                     SizedBox(
                       height: 20,
@@ -78,9 +84,21 @@ class _SignUpPageState extends State<SignUpPage> {
                           return "Password must be greater than 5";
                         }
                       },
+                      onChanged: (val){
+                        setState(() {
+                          error="";
+                        });
+                      },
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
+                    ),
+                    Text("$error",style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14
+                    )),
+                    SizedBox(
+                      height: 10,
                     ),
                     AuthButton(
                         color: myColor,
@@ -88,7 +106,15 @@ class _SignUpPageState extends State<SignUpPage> {
                         onTap: () async {
                           if (form.currentState!.validate()) {
                             print("${email.text},${password.text}");
-                            await AuthService(FirebaseAuth.instance).signup(email.text, password.text);
+                            setState(() {
+                              error="";
+                            });
+                            dynamic result = await AuthService(FirebaseAuth.instance).signup(email.text, password.text);
+                            if(result!=UserCredential){
+                              setState(() {
+                                error=result;
+                              });
+                            }
                           }
                         }),
                     Padding(

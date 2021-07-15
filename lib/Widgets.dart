@@ -11,6 +11,7 @@ class AuthTextField extends StatelessWidget {
     required this.hint,
     this.obscure=false,
     this.validator,
+    this.onChanged,
     this.eyeIcon=false,
     this.onEyePressed,
   }) : super(key: key);
@@ -22,6 +23,7 @@ class AuthTextField extends StatelessWidget {
   final String hint;
   bool obscure;
   FormFieldValidator<String>? validator;
+  ValueChanged<String>? onChanged;
   VoidCallback? onEyePressed;
   bool eyeIcon;
 
@@ -35,6 +37,7 @@ class AuthTextField extends StatelessWidget {
         style: TextStyle(color: darkMode ? Colors.grey : Colors.black),
         obscureText: obscure,
         validator: validator,
+        onChanged: onChanged,
         decoration: InputDecoration(
           prefixIcon: Icon(
             icon,
