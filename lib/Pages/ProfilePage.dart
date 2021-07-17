@@ -15,31 +15,36 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
+    bool heightGreater = size.height > size.width ? true : false;
     return Scaffold(
         body: SafeArea(
-      child: Column(
-        children: [
-          FutureBuilder(
-              future: DatabaseServices().getUserInfo(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                return Container(
-                  height: 80,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [BoxShadow(color: Colors.grey,offset: Offset(0,3),blurRadius: 6)],
-                  ),
-                  child: Row(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
+            children: [
+              Container(
+                height: 55,
+                width: double.infinity,
+                child: Center(child: Text("Profile",style: TextStyle(color: myColor,fontSize: 24),)),
+              ),
+              FutureBuilder(
+                  future: DatabaseServices().getUserInfo(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<dynamic> snapshot) {
+                    return InkWell(
+                      onTap: (){
+                        //TODO: Navigate to edit profile
+                      },
+                      child: Row(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              height: 70,
-                              width:70,
+                              height: heightGreater ? size.height * 0.1 : size
+                                  .height * 0.2,
+                              width: heightGreater ? size.width * 0.2 : size
+                                  .width * 0.1,
                               decoration: BoxDecoration(
                                 //color: Colors.green,
                                   borderRadius:
@@ -47,11 +52,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: (() {
                                 switch (snapshot.connectionState) {
                                   case ConnectionState.none:
-                                    return Image.asset("images/Default-Profile.png");
+                                    return Image.asset(
+                                        "images/Default-Profile.png");
                                   case ConnectionState.waiting:
-                                    return Image.asset("images/Default-Profile.png");
+                                    return Image.asset(
+                                        "images/Default-Profile.png");
                                   case ConnectionState.active:
-                                    return Image.asset("images/Default-Profile.png");
+                                    return Image.asset(
+                                        "images/Default-Profile.png");
                                   case ConnectionState.done:
                                     Map<String, dynamic> data = snapshot.data;
                                     if ({data['profileUrl']}.isEmpty)
@@ -75,82 +83,89 @@ class _ProfilePageState extends State<ProfilePage> {
                               }()),
                             ),
                           ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(padding: EdgeInsets.only(bottom: 40,left: 10),
+                                    child: (() {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.none:
+                                          return Text("Loading UserName...");
+                                        case ConnectionState.waiting:
+                                          return Text("Loading UserName...");
+                                        case ConnectionState.active:
+                                          return Text("Loading UserName...");
+                                        case ConnectionState.done:
+                                          Map<String, dynamic> data = snapshot
+                                              .data;
+                                          if ({data['name']}.isEmpty) {
+                                            return Text(
+                                              "Enter name",
+                                              style: TextStyle(
+                                                  fontSize: 18, color: myColor),
+                                            );
+                                          } else if (snapshot.hasError) {
+                                            return Text(
+                                              "Loading UserName...",
+                                              style: TextStyle(
+                                                  fontSize: 18, color: myColor),
+                                            );
+                                          } else if (data['name'] == null) {
+                                            return Text(
+                                              "Enter name",
+                                              style: TextStyle(
+                                                  fontSize: 18, color: myColor),
+                                            );
+                                          } else if (data['name'] == "") {
+                                            return Text(
+                                              "Enter name",
+                                              style: TextStyle(
+                                                  fontSize: 18, color: myColor),
+                                            );
+                                          } else if ({data['name']}.isNotEmpty) {
+                                            return Text(
+                                              "${data['name']}",
+                                              style: TextStyle(
+                                                  fontSize: 24, color: myColor),
+                                            );
+                                          }
+                                      }
+                                      Text(
+                                        "Loading UserName...",
+                                      );
+                                    }()), )
+                              ],
+                            ),
+                          ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 20.0, left: 10),
-                            child: (() {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.none:
-                                  return Text("Loading UserName...");
-                                case ConnectionState.waiting:
-                                  return Text("Loading UserName...");
-                                case ConnectionState.active:
-                                  return Text("Loading UserName...");
-                                case ConnectionState.done:
-                                  Map<String, dynamic> data = snapshot.data;
-                                  if ({data['name']}.isEmpty) {
-                                    return Text(
-                                      "Enter name",
-                                      style: TextStyle(fontSize: 18,color: myColor),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Text(
-                                      "Loading UserName...",
-                                      style: TextStyle(fontSize: 18,color: myColor),
-                                    );
-                                  } else if (data['name'] == null) {
-                                    return Text(
-                                      "Enter name",
-                                      style: TextStyle(fontSize: 18,color: myColor),
-                                    );
-                                  }else if (data['name'] == "") {
-                                    return Text(
-                                      "Enter name",
-                                      style: TextStyle(fontSize: 18,color: myColor),
-                                    );
-                                  } else if ({data['name']}.isNotEmpty) {
-                                    return Text(
-                                      "${data['name']}",
-                                      style: TextStyle(fontSize: 18,color: myColor),
-                                    );
-                                  }
-                              }
-                              Text(
-                                "Loading UserName...",
-                              );
-                            }()),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.arrow_forward_ios,color: myColor,),
                           ),
                         ],
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(onPressed: (){
-                              //TODO: Navigate to edit profile
-                            }, icon: Icon(Icons.arrow_forward_ios,color: myColor,))
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-          InkWell(
-            onTap: (){
-              AuthService(FirebaseAuth.instance).logout();
-            },
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Icon(Icons.logout,color: myColor,size: 30,),
+                    );
+                  }),
+              InkWell(
+                onTap: () {
+                  AuthService(FirebaseAuth.instance).logout();
+                },
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Icon(Icons.logout, color: myColor, size: 30,),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Logout",
+                      style: TextStyle(color: myColor, fontSize: 18),),
+                  ],
                 ),
-                Text("Logout",style: TextStyle(color: myColor,fontSize: 18),),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 }

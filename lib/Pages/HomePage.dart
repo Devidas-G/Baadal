@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.account_circle_rounded,color: page==4?myColor:Colors.grey[700],)),
       ],),
       body: PageView(
+        physics: BouncingScrollPhysics(),
         controller: pageController,
         onPageChanged: onPageChanged,
         children: [

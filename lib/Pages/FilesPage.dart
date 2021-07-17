@@ -21,10 +21,7 @@ class _FilesPageState extends State<FilesPage> {
               //AppBar
               height: 55,
               width: double.infinity,
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(
-                    color: Colors.grey, offset: Offset(0, 3), blurRadius: 6)
-              ]),
+
               child: Row(
                 children: [
                   Expanded(
@@ -79,7 +76,9 @@ class _FilesPageState extends State<FilesPage> {
                     physics: BouncingScrollPhysics(),
                     children: snapshot.data!.docs
                         .map((doc) => ListTile(
-                              title: Row(),
+                              title: Row(
+
+                              ),
                             ))
                         .toList());
               },
