@@ -26,7 +26,12 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 height: 55,
                 width: double.infinity,
-                child: Center(child: Text("Profile",style: TextStyle(color: myColor,fontSize: 24),)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Profile",style: TextStyle(color: myColor,fontSize: 22,fontWeight: FontWeight.bold),),
+                  ],
+                ),
               ),
               FutureBuilder(
                   future: DatabaseServices().getUserInfo(),

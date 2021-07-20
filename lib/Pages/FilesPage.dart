@@ -11,6 +11,18 @@ class FilesPage extends StatefulWidget {
 }
 
 class _FilesPageState extends State<FilesPage> {
+  String getImageIcon(type){
+    return "images/FilesIcon.png";
+  }
+  bool isImage(type){
+    switch(type){
+      case "jpg":
+        return true;
+      case "JPEG":
+        return true;
+    }
+    return false;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +89,48 @@ class _FilesPageState extends State<FilesPage> {
                     children: snapshot.data!.docs
                         .map((doc) => ListTile(
                               title: Row(
-
+                                children: [
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    //color: Colors.black,
+                                    child: isImage(doc['type'])?Image.network(doc['url'],fit: BoxFit.cover,):Image.asset(getImageIcon(doc["type"])),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          doc['name'],
+                                          style: TextStyle(
+                                            color: myColor,
+                                          ),
+                                          maxLines: 1,
+                                        ),
+                                        Text(
+                                          "Download",
+                                          style: TextStyle(
+                                              color: Colors.blue[700],
+                                              fontSize: 15),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: myColor,
+                                      size: 40,
+                                    ),
+                                    onPressed: () async {
+                                      await DatabaseServices().deleteDoc(doc['name']);
+                                      print("deleted");
+                                    },
+                                  )
+                                ],
                               ),
                             ))
                         .toList());
