@@ -20,20 +20,26 @@ class FilesPage extends StatefulWidget {
 class _FilesPageState extends State<FilesPage> {
   ReceivePort _port = ReceivePort();
   List types = ['jpg','jpeg','tif','tiff','bmp','gif','png'];
-  @override
+  /*@override
   void initState() {
+    //causing unexpected app shutdown
+    //TODO:Bug Fix
     super.initState();
 
     _bindBackgroundIsolate();
 
     FlutterDownloader.registerCallback(downloadCallback);
-  }
 
-  @override
+  }*/
+
+  /*@override
   void dispose() {
+    //causing unexpected app shutdown
+    //TODO:Bug Fix
     _unbindBackgroundIsolate();
     super.dispose();
-  }
+
+  }*/
   void _bindBackgroundIsolate() {
     bool isSuccess = IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
@@ -169,7 +175,8 @@ class _FilesPageState extends State<FilesPage> {
                                                   gravity: ToastGravity.CENTER,
                                               );
                                             }else{
-                                              final status = await Permission
+                                              //TODO: bug fix
+                                              /*final status = await Permission
                                                   .storage
                                                   .request();
                                               if (status.isGranted) {
@@ -182,7 +189,7 @@ class _FilesPageState extends State<FilesPage> {
                                                   true,
                                                   fileName: doc['name'],
                                                 );
-                                              }
+                                              }*/
                                             }
                                           },
                                           child: Text(

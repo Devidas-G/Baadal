@@ -1,4 +1,5 @@
 import 'package:baadal/Global%20variables.dart';
+import 'package:baadal/Pages/EditProfille.dart';
 import 'package:baadal/Services/AuthServices.dart';
 import 'package:baadal/Services/DatabaseServices.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,6 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     return InkWell(
                       onTap: (){
                         //TODO: Navigate to edit profile
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProfile()));
                       },
                       child: Row(
                         children: [
