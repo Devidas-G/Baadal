@@ -79,10 +79,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                     if ({data['profileUrl']}.isNotEmpty)
                                       return ClipRRect(
                                           borderRadius: BorderRadius.circular(90),
-                                          child: Image.network(
+                                          child:
+                                          Image.network(
                                             '${data['profileUrl']}',
                                             fit: BoxFit.cover,
-                                          ));
+                                          )
+                                      );
                                 }
                                 return Image.asset("images/Default-Profile.png");
                               }()),
