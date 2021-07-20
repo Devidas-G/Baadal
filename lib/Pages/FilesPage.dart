@@ -141,7 +141,7 @@ class _FilesPageState extends State<FilesPage> {
                                     height: 40,
                                     width: 40,
                                     //color: Colors.black,
-                                    child: isImage(doc['type'])?Image.network(doc['url'],fit: BoxFit.cover,):Image.asset(getImageIcon(doc["type"])),
+                                    child: isImage(doc['type'])?Image.network(doc['url'],fit: BoxFit.cover):Image.asset(getImageIcon(doc["type"])),
                                   ),
                                   SizedBox(
                                     width: 10,
