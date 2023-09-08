@@ -69,13 +69,11 @@ class _EditProfileState extends State<EditProfile> {
                       height: heightGreater
                           ? size.height * 0.15
                           : size.height * 0.3,
-                      width: heightGreater
-                          ? size.width * 0.3
-                          : size.width * 0.15,
+                      width:
+                          heightGreater ? size.width * 0.3 : size.width * 0.15,
                       decoration: BoxDecoration(
                           //color: Colors.green,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(90))),
+                          borderRadius: BorderRadius.all(Radius.circular(90))),
                       child: Stack(
                         children: [
                           Align(
@@ -138,8 +136,8 @@ class _EditProfileState extends State<EditProfile> {
                                     : size.width * 0.05,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(90))),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(90))),
                                 child: IconButton(
                                     onPressed: () {},
                                     icon: Icon(
@@ -154,7 +152,7 @@ class _EditProfileState extends State<EditProfile> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Form(
-                      key:nameKey,
+                      key: nameKey,
                       child: TextFormField(
                         controller: name,
                         validator: (text) {
@@ -166,10 +164,14 @@ class _EditProfileState extends State<EditProfile> {
                           suffixIcon: IconButton(
                             onPressed: () {
                               if (nameKey.currentState!.validate()) {
-                                DatabaseServices().userFiles.doc(user!.uid).update({
-                                  'name':name.text,
-                                }).whenComplete((){
-                                  FocusScope.of(context).unfocus();                                  Fluttertoast.showToast(
+                                DatabaseServices()
+                                    .userFiles
+                                    .doc(user!.uid)
+                                    .update({
+                                  'name': name.text,
+                                }).whenComplete(() {
+                                  FocusScope.of(context).unfocus();
+                                  Fluttertoast.showToast(
                                     msg: "Name updated",
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
@@ -208,10 +210,14 @@ class _EditProfileState extends State<EditProfile> {
                           suffixIcon: IconButton(
                             onPressed: () async {
                               if (aboutKey.currentState!.validate()) {
-                                await DatabaseServices().userFiles.doc(user!.uid).update({
-                                  'about':about.text,
+                                await DatabaseServices()
+                                    .userFiles
+                                    .doc(user!.uid)
+                                    .update({
+                                  'about': about.text,
                                 }).whenComplete(() {
-                                  FocusScope.of(context).unfocus();                                  Fluttertoast.showToast(
+                                  FocusScope.of(context).unfocus();
+                                  Fluttertoast.showToast(
                                     msg: "about updated",
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,

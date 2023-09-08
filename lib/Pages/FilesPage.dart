@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
-
 import 'package:baadal/Global%20variables.dart';
 import 'package:baadal/Services/DatabaseServices.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
